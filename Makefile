@@ -27,19 +27,19 @@ $(NAME): $(OBJECTS)
 		$(CC) $(OBJECTS) $(FLAGS) -o $(NAME)
 		@printf "$(BGCYAN) Philosophers at the table!! $(NC)\n"
 
-$(OBJECTS_DIR): sources/%.c
+$(OBJECTS_DIR): $(SOURCES)
 		@printf "$(BGBLUE) Setting the table... $(NC)\n"
 		mkdir -p $(@D)
 		$(CC) -I includes $(FLAGS) -c $< -o $@
 		@printf "$(BGBLUE) Table set!! $(NC)\n"
 
 clean:
-        @printf "$(BGYELL) Deleting created objects... $(NC)\n"
-        rm -f $(OBJECTS)
+		@printf "$(BGYELL) Deleting created objects... $(NC)\n"
+		rm -f $(OBJECTS)
 
 fclean: clean
-        @printf "$(BGYELL) Deleting executables... $(NC)\n"
-        rm -f $(NAME)
+		@printf "$(BGYELL) Deleting executables... $(NC)\n"
+		rm -f $(NAME)
 
 re: fclean all
 
