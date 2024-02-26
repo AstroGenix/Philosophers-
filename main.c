@@ -14,15 +14,23 @@
 
 int	main(int argn, char *args[])
 {
-	if (argn != 6)
-		printf("Wrong arguments bozo!\n");
-	else
-	{
-		printf("Number of Philosophers: %s\n", args[1]);
-		printf("Time to die: %s\n", args[2]);
-		printf("Time to eat: %s\n", args[3]);
-		printf("Time to sleep: %s\n", args[4]);
-		printf("N of times each philo must eat: %s\n", args[5]);
-	}
 	
+	if (input_check(argn, args) != 0)
+	{	
+		helper_print();
+		err_out("Wrong input");
+	}
+	if (philo(argn, args) != 0)
+		err_out("Error in philo");
+	return (0);
+}
+
+int	input_check(int argn, char *args[])
+{
+	return (1);
+}
+
+int	philo(int argn, char *args[])
+{
+	return (0);
 }
