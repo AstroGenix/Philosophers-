@@ -16,7 +16,7 @@ NC      = \033[0m
 NAME = philo
 
 # Project files
-SOURCES = main.c
+SOURCES = main.c source/utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
