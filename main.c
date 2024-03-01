@@ -14,6 +14,7 @@
 
 int	main(int argn, char *args[])
 {
+    t_table table;
 	if  ((argn != 5 && argn != 6) || (arg_check(argn, args) == true))
 	{
 		helper_print();
