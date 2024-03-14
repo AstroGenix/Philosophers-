@@ -27,11 +27,16 @@ int	main(int argn, char *args[])
 		err_exit("Incorrect number of arguments");
 	if (arg_check(argn, args) == true)
 		err_exit("One or more arguments are not numbers");
-	//if (init_values() == true)
-		//err_exit("One or more arguments have invalid values");
+	if (init_values(&table, args) == true)
+		err_exit("One or more arguments have invalid values");
 	if (philo(argn, args) != 0)
 		err_exit("Error in philo");
 	return (0);
+}
+
+bool	init_values(t_table *val, char **args)
+{
+
 }
 
 int	philo(int argn, char **args)
