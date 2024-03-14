@@ -23,7 +23,7 @@
 //- - Structures
 
 /*Fork struct*/
-typedef strcut  s_fork
+typedef struct  s_fork
 {
 	int             fork_id;
 	pthread_mutex_t fork;
