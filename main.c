@@ -11,15 +11,24 @@
 /* ************************************************************************** */
 
 #include "include/philosophers.h"
+/*
+int main()
+{
+	Check the number of arguments
+		exit for wrong num of args 
 
+}
+*/
 int	main(int argn, char *args[])
 {
-    t_table table;
-	if  ((argn != 5 && argn != 6) || (arg_check(argn, args) == true))
-	{
-		helper_print();
-		err_exit("Incorrect arguments");
-	}
+	t_table table;
+
+	if (argn != 5 && argn != 6)
+		err_exit("Incorrect number of arguments");
+	if (arg_check(argn, args) == true)
+		err_exit("One or more arguments are not numbers");
+	//if (init_values() == true)
+		//err_exit("One or more arguments have invalid values");
 	if (philo(argn, args) != 0)
 		err_exit("Error in philo");
 	return (0);

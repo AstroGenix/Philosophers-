@@ -12,6 +12,7 @@
 # include <stdbool.h>	// True || False
 
 //- - ANSI Escape sequence for text colors
+// https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a
 # define RST	"\033[0m"	/*White  */
 # define R		"\033[31m"	/*Red    */
 # define G		"\033[32m"	/*Green  */
@@ -23,26 +24,26 @@
 //- - Structures
 
 /*Fork struct*/
-typedef struct  s_fork
+typedef struct	s_fork
 {
-	int             fork_id;
-	pthread_mutex_t fork;
-}               t_fork;
+	int				fork_id;
+	pthread_mutex_t	fork;
+}				t_fork;
 
 /*Philosophers struct*/
-typedef struct s_philo
+typedef struct	s_philo
 {
-	int		    id;
-	int		    meal_count;
-	bool	    full;
-	int		    last_meal_time;
-	t_fork      *r_fork;
-	t_fork      *l_fork;
-	pthread_t   thread_id;
+	int			id;
+	int			meal_count;
+	bool		full;
+	int			last_meal_time;
+	t_fork		*r_fork;
+	t_fork		*l_fork;
+	pthread_t	thread_id;
 }				t_philo;
 
-/*Table struck*/
-typedef struct s_table
+/*Table struct*/
+typedef struct	s_table
 {
 	int		philo_num;
 	int		time_to_die;
@@ -53,7 +54,7 @@ typedef struct s_table
 	bool	end_sim;
 	t_fork	*fork;
 	t_philo	*philo;
-}               t_table;
+}				t_table;
 
 
 //- - Functions

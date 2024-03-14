@@ -37,7 +37,8 @@ void	helper_print(void)
 //String describes the error to exit program.
 void	err_exit(char *s)
 {
-	printf(R "- - %s - -\n" RST, s);
+	helper_print();
+	printf("\e[41mError:\e[0m" R " %s\n" RST, s);
 	exit (1);
 }
 
