@@ -21,7 +21,7 @@ int main()
 */
 int	main(int argn, char *args[])
 {
-	t_table table;
+	t_args table;
 
 	if (argn != 5 && argn != 6)
 		err_exit("Incorrect number of arguments");
@@ -35,7 +35,7 @@ int	main(int argn, char *args[])
 }
 
 //Initiate and check for valid values
-bool	init_values(t_table *val, char **args)
+bool	init_values(t_args *val, char **args)
 {
 	val->philo_num = ft_atoi(args[1]);
 	val->time_to_die = ft_atoi(args[2]);
@@ -47,6 +47,10 @@ bool	init_values(t_table *val, char **args)
 		val->max_meals = -1;
 	if (val->philo_num == 0 || val->max_meals == 0)
 		return (true);
+	if (pthread_mutex_init(&val->guilty_spark, NULL) != 0)
+		err_exit("Mutex initation failed [init_values()]");
+	val->sim_end = false;
+	return (false);
 }
 
 int	philo(int argn, char **args)

@@ -28,7 +28,7 @@ typedef struct	s_fork
 {
 	int				fork_id;
 	pthread_mutex_t	fork;
-}				t_fork;
+}					t_fork;
 
 /*Philosophers struct*/
 typedef struct	s_philo
@@ -36,25 +36,24 @@ typedef struct	s_philo
 	int			id;
 	int			meal_count;
 	bool		full;
-	int			last_meal_time;
+	suseconds_t	last_meal_time;
 	t_fork		*r_fork;
 	t_fork		*l_fork;
 	pthread_t	thread_id;
+	suseconds_t	start_time;
 }				t_philo;
 
 /*Table struct*/
-typedef struct	s_table
+typedef struct	s_args
 {
-	int		philo_num;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		max_meals;
-	int		start_sim;
-	bool	end_sim;
-	t_fork	*fork;
-	t_philo	*philo;
-}				t_table;
+	int				philo_num;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				max_meals;
+	bool			sim_end;
+	pthread_mutex_t	guilty_spark;
+}							t_args;
 
 
 //- - Functions
