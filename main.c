@@ -34,9 +34,19 @@ int	main(int argn, char *args[])
 	return (0);
 }
 
+//Initiate and check for valid values
 bool	init_values(t_table *val, char **args)
 {
-
+	val->philo_num = ft_atoi(args[1]);
+	val->time_to_die = ft_atoi(args[2]);
+	val->time_to_eat = ft_atoi(args[3]);
+	val->time_to_sleep = ft_atoi(args[4]);
+	if (args[5])
+		val->max_meals = ft_atoi(args[5]);
+	else
+		val->max_meals = -1;
+	if (val->philo_num == 0 || val->max_meals == 0)
+		return (true);
 }
 
 int	philo(int argn, char **args)

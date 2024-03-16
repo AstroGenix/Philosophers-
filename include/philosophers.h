@@ -49,7 +49,7 @@ typedef struct	s_table
 	int		time_to_die;
 	int		time_to_eat;
 	int		time_to_sleep;
-	int		num_meals;
+	int		max_meals;
 	int		start_sim;
 	bool	end_sim;
 	t_fork	*fork;
