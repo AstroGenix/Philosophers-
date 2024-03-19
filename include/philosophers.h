@@ -59,7 +59,9 @@ typedef struct	s_args
 //- - Functions
 void	err_exit(char *s);
 void	helper_print(void);
-int		philo(int argn, char **args);
+int		philo_start(int argn, char **args);
 bool	arg_check(int argn, char **args);
+
+bool	init_values(t_args *val, char **args);
 
 #endif

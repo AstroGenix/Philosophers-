@@ -21,7 +21,9 @@ int main()
 */
 int	main(int argn, char *args[])
 {
-	t_args table;
+	t_args 			table;
+	t_philo			*philo;
+	pthread_mutex_t	*fork;
 
 	if (argn != 5 && argn != 6)
 		err_exit("Incorrect number of arguments");
@@ -29,31 +31,13 @@ int	main(int argn, char *args[])
 		err_exit("One or more arguments are not numbers");
 	if (init_values(&table, args) == true)
 		err_exit("One or more arguments have invalid values");
-	if (philo(argn, args) != 0)
+	/*fork = initialize_fork(args);*/
+	if (philo_start(argn, args) != 0)
 		err_exit("Error in philo");
 	return (0);
 }
 
-//Initiate and check for valid values
-bool	init_values(t_args *val, char **args)
-{
-	val->philo_num = ft_atoi(args[1]);
-	val->time_to_die = ft_atoi(args[2]);
-	val->time_to_eat = ft_atoi(args[3]);
-	val->time_to_sleep = ft_atoi(args[4]);
-	if (args[5])
-		val->max_meals = ft_atoi(args[5]);
-	else
-		val->max_meals = -1;
-	if (val->philo_num == 0 || val->max_meals == 0)
-		return (true);
-	if (pthread_mutex_init(&val->guilty_spark, NULL) != 0)
-		err_exit("Mutex initation failed [init_values()]");
-	val->sim_end = false;
-	return (false);
-}
-
-int	philo(int argn, char **args)
+int	philo_start(int argn, char **args)
 {
 	return (0);
 }
