@@ -6,18 +6,20 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/20 16:41:53 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:01:33 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
+//Send philo to sleep
 static void nap(t_philo *me)
 {
 	monitor(me, "is sleeping.");
 	usleep(me->table->time_to_sleep * 1000);
 }
 
+//Philo drops fork freeing them
 static void drop_fork(t_philo *me)
 {
 	if (me->table->philo_num % 2 == 0)
@@ -36,24 +38,26 @@ static void drop_fork(t_philo *me)
 	}
 }
 
+//Philo grabs fork to eat
 static void grab_fork(t_philo *me)
 {
 	if (me->table->philo_num % 2 == 0)
 	{
 		pthread_mutex_lock(me->l_fork);
-		monitor(me, "picked up left fork");
+		monitor(me, "grabbed left fork");
 		pthread_mutex_lock(me->r_fork);
-		monitor(me, "picked up right fork");
+		monitor(me, "grabbed right fork");
 	}
 	else
 	{
 		pthread_mutex_lock(me->r_fork);
-		monitor(me, "picked up right fork");
+		monitor(me, "grabbed right fork");
 		pthread_mutex_lock(me->l_fork);
-		monitor(me, "picked up left fork");
+		monitor(me, "grabbed left fork");
 	}
 }
 
+//Send philo to eat
 static void eat(t_philo *me)
 {
 	grab_fork(me);
@@ -74,7 +78,7 @@ void	*routine(void *philo)
 	me = (t_philo *)philo;
 	if (me->table->philo_num = 1)
 	{
-		monitor(me);
+		monitor(me, "grabbed only fork");
 		return (NULL);
 	}
 	while (true)
