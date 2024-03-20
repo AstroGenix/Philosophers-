@@ -26,10 +26,35 @@ int	main(int argn, char *args[])
 		err_exit("One or more arguments have invalid values");
 	fork = init_fork(&table);
 	philo = init_philo(&table, fork);
+	create_join_threads(&table, fork, philo);
 	return (0);
 }
 
-int	philo_start(int argn, char **args)
+void	catch_end_clause(t_table *val, t_philo *philo)
 {
-	return (0);
+
+}
+
+//Create then join the threads
+void	create_join_threads(t_table *val, pthread_mutex_t *fork, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < val->philo_num)
+	{
+		philo[i].start_time = cur_time();
+		if (pthread_create(&philo[i].thread_id, NULL, routine, (void *)&philo[i]) != 0)
+			err_exit("Could not create philo thread");
+		i++;
+	}
+	catch_end_clause(val, philo);
+	i = 0;
+	while (i < val->philo_num)
+	{	
+		if (pthread_join(philo[i].thread_id, NULL) != 0)
+			err_exit("Could not join philo thread");
+		i++;
+	}
+	return ;
 }

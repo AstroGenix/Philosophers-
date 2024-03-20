@@ -45,6 +45,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_t		thread_id;
 	suseconds_t		start_time;
+	t_table			*table;
 }					t_philo;
 
 /*Table struct*/
@@ -60,10 +61,10 @@ typedef struct s_table
 }					t_table;
 
 //- - Functions
-void	err_exit(char *s);
-int		philo_start(int argn, char **args);
-bool	arg_check(int argn, char **args);
-
-bool	init_values(t_table *val, char **args);
-
+void		err_exit(char *s);
+int			philo_start(int argn, char **args);
+bool		arg_check(int argn, char **args);
+suseconds_t	cur_time(void);
+bool		init_values(t_table *val, char **args);
+void		*routine(void *philo);
 #endif

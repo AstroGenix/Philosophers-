@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 08:14:43 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/20 09:56:24 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:14:14 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	init_values(t_table *val, char **args)
 	if (val->philo_num == 0 || val->max_meals == 0)
 		return (true);
 	if (pthread_mutex_init(&val->guilty_spark, NULL) != 0)
-		err_exit("Mutex initation failed [init_values()]");
+		err_exit("Could not initiate mutex");
 	val->sim_end = false;
 	return (false);
 }
@@ -67,7 +67,7 @@ t_philo	*init_philo(t_table *val, pthread_mutex_t *fork)
 	i = 0;
 	while (i < val->philo_num)
 	{
-		philo[i].id = i;
+		philo[i].id = i + 1;
 		philo[i].meal_count = 0;
 		philo[i].full = false;
 		philo[i].last_meal_time = 0;
