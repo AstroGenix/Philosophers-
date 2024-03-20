@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 08:14:43 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/20 09:45:06 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/03/20 09:56:24 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	init_values(t_table *val, char **args)
 }
 
 //Create and initiate forks
-pthread_mutex_t *init_forks(t_table *val)
+pthread_mutex_t	*init_forks(t_table *val)
 {
 	pthread_mutex_t	*fork;
 	int				i;
@@ -45,7 +45,7 @@ pthread_mutex_t *init_forks(t_table *val)
 	{
 		if (pthread_mutex_init(&fork[i], NULL) != 0)
 		{
-			while(i-- > 0)
+			while (i-- > 0)
 				pthread_mutex_destroy(&fork[i]);
 			free(fork);
 			err_exit("Could not initialize fork");

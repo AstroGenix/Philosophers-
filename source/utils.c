@@ -33,17 +33,16 @@ bool	arg_check(int argn, char **args)
 	return (false);
 }
 
-//To help user with command
+//To help user with command [Example: 5 800 200 200 7]
 static void	helper_print(void)
 {
-	/*Example: 5 800 200 200 7*/
-	printf("Example: ./philo" G " 5 " Y " 800 " B " 200 " M " 300" C " 7 " RST"\n");
+	printf("./philo" G " 5 " Y " 800 " B " 200 " M " 300" C " 7 " RST"\n");
 	printf(G " 5   " RST ": The number of philosophers\n");
-	printf(Y " 800 " RST ": The time a philosopher will die if he don’t eat\n");
+	printf(Y " 800 " RST ": The time a philosopher will die if he dont eat\n");
 	printf(B " 200 " RST ": The time it takes a philosopher to eat\n");
 	printf(M " 300 " RST ": The time it takes a philosopher to sleep\n");
 	printf(C " 7   " RST ": (optional) Number of times all the "
-		 "philosophers need to eat before terminating the program\n");
+		"philosophers need to eat before terminating the program\n");
 }
 
 //String describes the error to exit program.

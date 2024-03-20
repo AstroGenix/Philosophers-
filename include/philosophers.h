@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 09:16:07 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/20 09:16:07 by dberehov         ###   ########.fr       */
+/*   Created: 2024/03/20 09:57:31 by dberehov          #+#    #+#             */
+/*   Updated: 2024/03/20 09:57:31 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS
-# define PHILOSOPHERS
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
 //- - Libraries
 # include <memory.h>	// memset()
@@ -35,7 +35,7 @@
 //- - Structures
 
 /*Philosophers struct*/
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				meal_count;
@@ -48,7 +48,7 @@ typedef struct	s_philo
 }					t_philo;
 
 /*Table struct*/
-typedef struct	s_table
+typedef struct s_table
 {
 	int				philo_num;
 	int				time_to_die;
@@ -58,7 +58,6 @@ typedef struct	s_table
 	bool			sim_end;
 	pthread_mutex_t	guilty_spark;
 }					t_table;
-
 
 //- - Functions
 void	err_exit(char *s);

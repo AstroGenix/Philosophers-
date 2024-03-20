@@ -14,7 +14,7 @@
 
 int	main(int argn, char *args[])
 {
-	t_table 		table;
+	t_table			table;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
 
