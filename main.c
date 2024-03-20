@@ -11,17 +11,10 @@
 /* ************************************************************************** */
 
 #include "include/philosophers.h"
-/*
-int main()
-{
-	Check the number of arguments
-		exit for wrong num of args 
 
-}
-*/
 int	main(int argn, char *args[])
 {
-	t_args 			table;
+	t_table 		table;
 	t_philo			*philo;
 	pthread_mutex_t	*fork;
 
@@ -31,9 +24,8 @@ int	main(int argn, char *args[])
 		err_exit("One or more arguments are not numbers");
 	if (init_values(&table, args) == true)
 		err_exit("One or more arguments have invalid values");
-	/*fork = initialize_fork(args);*/
-	if (philo_start(argn, args) != 0)
-		err_exit("Error in philo");
+	fork = init_fork(&table);
+	philo = init_philo(&table, fork);
 	return (0);
 }
 

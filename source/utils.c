@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 08:14:52 by dberehov          #+#    #+#             */
+/*   Updated: 2024/03/20 08:14:52 by dberehov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/philosophers.h"
 
 //If input something other than numbers exit with true flag
@@ -22,7 +34,7 @@ bool	arg_check(int argn, char **args)
 }
 
 //To help user with command
-void	helper_print(void)
+static void	helper_print(void)
 {
 	/*Example: 5 800 200 200 7*/
 	printf("Example: ./philo" G " 5 " Y " 800 " B " 200 " M " 300" C " 7 " RST"\n");

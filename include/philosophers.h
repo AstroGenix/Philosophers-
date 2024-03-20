@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 09:16:07 by dberehov          #+#    #+#             */
+/*   Updated: 2024/03/20 09:16:07 by dberehov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PHILOSOPHERS
 # define PHILOSOPHERS
@@ -23,28 +34,21 @@
 
 //- - Structures
 
-/*Fork struct*/
-typedef struct	s_fork
-{
-	int				fork_id;
-	pthread_mutex_t	fork;
-}					t_fork;
-
 /*Philosophers struct*/
 typedef struct	s_philo
 {
-	int			id;
-	int			meal_count;
-	bool		full;
-	suseconds_t	last_meal_time;
-	t_fork		*r_fork;
-	t_fork		*l_fork;
-	pthread_t	thread_id;
-	suseconds_t	start_time;
-}				t_philo;
+	int				id;
+	int				meal_count;
+	bool			full;
+	suseconds_t		last_meal_time;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+	pthread_t		thread_id;
+	suseconds_t		start_time;
+}					t_philo;
 
 /*Table struct*/
-typedef struct	s_args
+typedef struct	s_table
 {
 	int				philo_num;
 	int				time_to_die;
@@ -53,15 +57,14 @@ typedef struct	s_args
 	int				max_meals;
 	bool			sim_end;
 	pthread_mutex_t	guilty_spark;
-}							t_args;
+}					t_table;
 
 
 //- - Functions
 void	err_exit(char *s);
-void	helper_print(void);
 int		philo_start(int argn, char **args);
 bool	arg_check(int argn, char **args);
 
-bool	init_values(t_args *val, char **args);
+bool	init_values(t_table *val, char **args);
 
 #endif
