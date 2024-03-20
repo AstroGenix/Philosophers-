@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/20 17:01:33 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:08:38 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	*routine(void *philo)
 	t_philo *me;
 	
 	me = (t_philo *)philo;
-	if (me->table->philo_num = 1)
+	if (me->table->philo_num == 1)
 	{
 		monitor(me, "grabbed only fork");
 		return (NULL);
