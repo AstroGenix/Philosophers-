@@ -6,11 +6,22 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/20 13:53:32 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:02:10 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
+
+static void nap(t_philo *philo)
+{
+    monitor(philo);
+    usleep(philo->table->time_to_sleep * 1000);
+}
+
+static void eat(t_philo *philo)
+{
+
+}
 
 //The routine philosophers must abide by
 void	*routine(void *philo)
@@ -20,7 +31,7 @@ void	*routine(void *philo)
     me = (t_philo *)philo;
     if (me->table->philo_num = 1)
     {
-        monitor(philo);
+        monitor(me);
         return (NULL);
     }
 	while (true)
@@ -34,7 +45,7 @@ void	*routine(void *philo)
         pthread_mutex_unlock(&me->table->guilty_spark);
         eat(me);
         nap(me);
-        monitor(philo);
+        monitor(me);
 	}
 	return (NULL);
 }
