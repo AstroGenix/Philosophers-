@@ -27,12 +27,27 @@ int	main(int argn, char *args[])
 	fork = init_fork(&table);
 	philo = init_philo(&table, fork);
 	create_join_threads(&table, fork, philo);
+	cleanup(&table, fork, philo);
 	return (0);
 }
 
-void	catch_end_clause(t_table *val, t_philo *philo)
+void	cleanup(t_table *val, pthread_mutex_t *fork, t_philo *philo)
 {
+	int	i;
 
+	i = 0;
+	pthread_mutex_destroy(&val->guilty_spark);
+	if (fork)
+	{
+		while (i < val->philo_num)
+		{
+			pthread_mutex_destroy(&fork[i]);
+			i++;
+		}
+		free(fork);
+	}
+	if (philo)
+		free(philo);
 }
 
 //Create then join the threads

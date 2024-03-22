@@ -50,7 +50,7 @@ static void	log_action(int i, char *msg, long int time)
  * serialize access to shared resources (e.g., logging output) for thread
  * safety.
  * The function calculates the time since the philosopher's start time to
- * provide * a relative timestamp for when the action occurred.
+ * provide a relative timestamp for when the action occurred.
  *
  * @param philo The philosopher who is performing the action.
  * @param msg The message to log, describing the action taken.

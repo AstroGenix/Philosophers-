@@ -12,7 +12,6 @@
 
 #include "../include/philosophers.h"
 
-//Initiate and check for valid values
 bool	init_values(t_table *val, char **args)
 {
 	val->philo_num = ft_atoi(args[1]);
@@ -31,7 +30,6 @@ bool	init_values(t_table *val, char **args)
 	return (false);
 }
 
-//Create and initiate forks
 pthread_mutex_t	*init_forks(t_table *val)
 {
 	pthread_mutex_t	*fork;
@@ -55,7 +53,6 @@ pthread_mutex_t	*init_forks(t_table *val)
 	return (fork);
 }
 
-//Create and init values for philo
 t_philo	*init_philo(t_table *val, pthread_mutex_t *fork)
 {
 	t_philo	*philo;

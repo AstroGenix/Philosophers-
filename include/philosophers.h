@@ -67,4 +67,5 @@ bool		arg_check(int argn, char **args);
 suseconds_t	cur_time(void);
 bool		init_values(t_table *val, char **args);
 void		*routine(void *philo);
+void		catch_end_clause(t_table *val, t_philo *philo);
 #endif

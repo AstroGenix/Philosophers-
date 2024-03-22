@@ -12,17 +12,15 @@
 
 #include "../include/philosophers.h"
 
-//Send philo to sleep
 static void nap(t_philo *me)
 {
 	monitor(me, "is sleeping.");
 	usleep(me->table->time_to_sleep * 1000);
 }
 
-//Philo drops fork freeing them
 static void drop_fork(t_philo *me)
 {
-	if (me->table->philo_num % 2 == 0)
+	if (me->id % 2 == 0)
 	{
 		pthread_mutex_unlock(me->l_fork);
 		monitor(me, "dropped left fork");
@@ -38,10 +36,10 @@ static void drop_fork(t_philo *me)
 	}
 }
 
-//Philo grabs fork to eat
+
 static void grab_fork(t_philo *me)
 {
-	if (me->table->philo_num % 2 == 0)
+	if (me->id % 2 == 0)
 	{
 		pthread_mutex_lock(me->l_fork);
 		monitor(me, "grabbed left fork");
@@ -57,7 +55,6 @@ static void grab_fork(t_philo *me)
 	}
 }
 
-//Send philo to eat
 static void eat(t_philo *me)
 {
 	grab_fork(me);
@@ -70,7 +67,6 @@ static void eat(t_philo *me)
 	drop_fork(me);
 }
 
-//The routine philosophers must abide by
 void	*routine(void *philo)
 {
 	t_philo *me;
