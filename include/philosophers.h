@@ -39,7 +39,6 @@ typedef struct s_philo
 {
 	int				id;
 	int				meal_count;
-	bool			full;
 	suseconds_t		last_meal_time;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
@@ -68,4 +67,6 @@ suseconds_t	cur_time(void);
 bool		init_values(t_table *val, char **args);
 void		*routine(void *philo);
 void		catch_end_clause(t_table *val, t_philo *philo);
+void		cleanup(t_table *val, pthread_mutex_t *fork, t_philo *philo);
+void		create_join_threads(t_table *val, pthread_mutex_t *fork, t_philo *philo);
 #endif
