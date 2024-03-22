@@ -34,6 +34,18 @@
 
 //- - Structures
 
+/*Table struct*/
+typedef struct s_table
+{
+	int				philo_num;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				max_meals;
+	bool			sim_end;
+	pthread_mutex_t	guilty_spark;
+}					t_table;
+
 /*Philosophers struct*/
 typedef struct s_philo
 {
@@ -47,26 +59,18 @@ typedef struct s_philo
 	t_table			*table;
 }					t_philo;
 
-/*Table struct*/
-typedef struct s_table
-{
-	int				philo_num;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				max_meals;
-	bool			sim_end;
-	pthread_mutex_t	guilty_spark;
-}					t_table;
-
 //- - Functions
-void		err_exit(char *s);
-int			philo_start(int argn, char **args);
-bool		arg_check(int argn, char **args);
-suseconds_t	cur_time(void);
-bool		init_values(t_table *val, char **args);
-void		*routine(void *philo);
-void		catch_end_clause(t_table *val, t_philo *philo);
-void		cleanup(t_table *val, pthread_mutex_t *fork, t_philo *philo);
-void		create_join_threads(t_table *val, pthread_mutex_t *fork, t_philo *philo);
+void			err_exit(char *s);
+int				philo_start(int argn, char **args);
+bool			arg_check(int argn, char **args);
+suseconds_t		cur_time(void);
+int				ft_atoi(const char *nptr);
+bool			init_values(t_table *val, char **args);
+pthread_mutex_t	*init_fork(t_table *val);
+t_philo			*init_philo(t_table *val, pthread_mutex_t *fork);
+void			*routine(void *philo);
+void			catch_end_clause(t_table *val, t_philo *philo);
+void			cleanup(t_table *val, pthread_mutex_t *fork, t_philo *philo);
+void			create_join_threads(t_table *val, pthread_mutex_t *fork, t_philo *philo);
+void			monitor(t_philo *philo, char *msg);
 #endif

@@ -31,13 +31,13 @@
  * @param time The relative time (in milliseconds) at which the action
  *   occurred, since the start of the simulation.
  */
-static void	log_action(int i, char *msg, long int time)
+static void	log_action(int i, char *msg, suseconds_t time)
 {
 	const char	*color[7] = {"\e[1;91m", "\e[1;92m", "\e[1;93m", "\e[1;94m",
 		"\e[1;95m", "\e[1;96m", "\e[1;97m"};
 
-	printf("\e[1;97m%ld \e[0m\t", time);
-	printf("%s%i", color[i % 7], i);
+	printf("\e[1;97m%ld \e[0m", time);
+	printf("%s%i ", color[i % 7], i);
 	printf("\e[1;97m%s\e[0m\n", msg);
 }
 

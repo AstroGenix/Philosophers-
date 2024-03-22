@@ -55,21 +55,19 @@ void	create_join_threads(t_table *val, pthread_mutex_t *fork, t_philo *philo)
 {
 	int	i;
 
-	i = 0;
-	while (i < val->philo_num)
+	i = -1;
+	while (++i < val->philo_num)
 	{
 		philo[i].start_time = cur_time();
 		if (pthread_create(&philo[i].thread_id, NULL, routine, (void *)&philo[i]) != 0)
 			err_exit("Could not create philo thread");
-		i++;
 	}
 	catch_end_clause(val, philo);
-	i = 0;
-	while (i < val->philo_num)
+	i = -1;
+	while (++i < val->philo_num)
 	{	
 		if (pthread_join(philo[i].thread_id, NULL) != 0)
 			err_exit("Could not join philo thread");
-		i++;
 	}
 	return ;
 }

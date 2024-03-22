@@ -22,17 +22,17 @@ static void drop_fork(t_philo *me)
 {
 	if (me->id % 2 == 0)
 	{
-		pthread_mutex_unlock(me->l_fork);
-		monitor(me, "dropped left fork");
 		pthread_mutex_unlock(me->r_fork);
-		monitor(me, "dropped right fork");
+		monitor(me, "has dropped a fork");
+		pthread_mutex_unlock(me->l_fork);
+		monitor(me, "has dropped a fork");
 	}
 	else
 	{
-		pthread_mutex_unlock(me->r_fork);
-		monitor(me, "dropped right fork");
 		pthread_mutex_unlock(me->l_fork);
-		monitor(me, "dropped left fork");
+		monitor(me, "has dropped a fork");
+		pthread_mutex_unlock(me->r_fork);
+		monitor(me, "has dropped a fork");
 	}
 }
 
@@ -42,16 +42,16 @@ static void grab_fork(t_philo *me)
 	if (me->id % 2 == 0)
 	{
 		pthread_mutex_lock(me->l_fork);
-		monitor(me, "grabbed left fork");
+		monitor(me, "has taken a fork");
 		pthread_mutex_lock(me->r_fork);
-		monitor(me, "grabbed right fork");
+		monitor(me, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(me->r_fork);
-		monitor(me, "grabbed right fork");
+		monitor(me, "has taken a fork");
 		pthread_mutex_lock(me->l_fork);
-		monitor(me, "grabbed left fork");
+		monitor(me, "has taken a fork");
 	}
 }
 
@@ -74,7 +74,7 @@ void	*routine(void *philo)
 	me = (t_philo *)philo;
 	if (me->table->philo_num == 1)
 	{
-		monitor(me, "grabbed only fork");
+		monitor(me, "has taken a fork");
 		return (NULL);
 	}
 	while (true)

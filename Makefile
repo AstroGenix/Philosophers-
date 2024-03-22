@@ -1,7 +1,6 @@
-
 #Compiler and flags
 CC    = cc -g
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -lpthread
 
 # Colours                                                                                                
 BGRED   = \033[0;41m
@@ -16,7 +15,8 @@ NC      = \033[0m
 NAME = philo
 
 # Project files
-SOURCES = main.c source/utils.c
+SOURCES = main.c source/utils.c source/end_sim.c source/init.c source/monitor.c \
+		source/routine.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

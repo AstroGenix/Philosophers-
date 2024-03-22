@@ -30,10 +30,11 @@ bool	init_values(t_table *val, char **args)
 	return (false);
 }
 
-pthread_mutex_t	*init_forks(t_table *val)
+pthread_mutex_t	*init_fork(t_table *val)
 {
 	pthread_mutex_t	*fork;
 	int				i;
+
 
 	fork = malloc(sizeof(pthread_mutex_t) * val->philo_num);
 	if (!fork)
@@ -69,6 +70,7 @@ t_philo	*init_philo(t_table *val, pthread_mutex_t *fork)
 		philo[i].last_meal_time = 0;
 		philo[i].l_fork = &fork[i];
 		philo[i].r_fork = &fork[(i + 1) % val->philo_num];
+		philo[i].table = val;
 		i++;
 	}
 	return (philo);
