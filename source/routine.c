@@ -59,8 +59,8 @@ static void eat(t_philo *me)
 {
 	grab_fork(me);
 	pthread_mutex_lock(&me->table->guilty_spark);
-	me->meal_count++;
 	me->last_meal_time = cur_time();
+	me->meal_count++;
 	pthread_mutex_unlock(&me->table->guilty_spark);
 	monitor(me, "is eating");
 	usleep(me->table->time_to_eat * 1000);

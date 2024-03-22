@@ -70,6 +70,7 @@ t_philo	*init_philo(t_table *val, pthread_mutex_t *fork)
 		philo[i].last_meal_time = 0;
 		philo[i].l_fork = &fork[i];
 		philo[i].r_fork = &fork[(i + 1) % val->philo_num];
+		philo[i].last_meal_time = cur_time();
 		philo[i].table = val;
 		i++;
 	}
