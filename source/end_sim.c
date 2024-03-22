@@ -9,17 +9,14 @@ static inline bool	starved(t_philo *philo)
 static void	end_sim(t_table	*val)
 {
 	val->sim_end = true;
-	printf("Philosophers have finished dining.");
+	printf("Philosophers have finished dining\n");
 	pthread_mutex_unlock(&val->guilty_spark);
 }
 
 static bool	is_dead(t_table *val, t_philo *philo, int *full_count)
 {
-	//printf("val->max_meals: %i > 0 && philo->meal_count : %i >=  %i :val->max_meals\n", val->max_meals, philo->meal_count, val->max_meals);
 	if (val->max_meals > 0 && philo->meal_count >= val->max_meals)
-	{
-		*full_count++;
-	}
+		*full_count += 1;
 	if (starved(philo))
 	{
 		pthread_mutex_unlock(&val->guilty_spark);
@@ -44,11 +41,9 @@ void	catch_end_clause(t_table *val, t_philo *philo)
 		pthread_mutex_lock(&val->guilty_spark);
 		while (++i < val->philo_num)
 		{
-			//printf("Philo %i | meal n: %i < %i\n", val->philo_num, philo->meal_count, full_count);
 			if (is_dead(val, &philo[i], &full_count))
 				return ;
 		}
-        //printf("Meal needed: %i | meal n: %i\n", val->philo_num, full_count);
 		if (full_count == val->philo_num)
 			return (end_sim(val));
 		pthread_mutex_unlock(&val->guilty_spark);
