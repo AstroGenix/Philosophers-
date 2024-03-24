@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:06:57 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/20 17:36:31 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/03/24 01:36:31 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	log_action(int i, char *msg, suseconds_t time)
  */
 void	monitor(t_philo *philo, char *msg)
 {
-	suseconds_t	time;
+	int	time;
 
 	pthread_mutex_lock(&philo->table->guilty_spark);// Lock the simulation-wide mutex to ensure thread-safe access.
 	if (philo->table->sim_end)// If the simulation has ended, unlock the mutex and return early.

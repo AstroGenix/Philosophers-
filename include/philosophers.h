@@ -51,11 +51,11 @@ typedef struct s_philo
 {
 	int				id;
 	int				meal_count;
-	suseconds_t		last_meal_time;
+	int				last_meal_time;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_t		thread_id;
-	suseconds_t		start_time;
+	int				start_time;
 	t_table			*table;
 }					t_philo;
 
@@ -63,7 +63,7 @@ typedef struct s_philo
 void			err_exit(char *s);
 int				philo_start(int argn, char **args);
 bool			arg_check(int argn, char **args);
-suseconds_t		cur_time(void);
+int				cur_time(void);
 int				ft_atoi(const char *nptr);
 bool			init_values(t_table *val, char **args);
 pthread_mutex_t	*init_fork(t_table *val);

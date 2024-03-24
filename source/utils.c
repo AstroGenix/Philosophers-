@@ -13,7 +13,7 @@
 #include "../include/philosophers.h"
 
 //Fetch the current time
-suseconds_t	cur_time(void)
+int	cur_time(void)
 {
 	struct timeval time;
 
