@@ -34,6 +34,19 @@
 
 //- - Structures
 
+/*Philosophers struct*/
+typedef struct s_philo
+{
+	int				id;
+	int				meal_count;
+	long long		last_meal_time;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+	pthread_t		thread_id;
+	struct s_table	*table;
+}					t_philo;
+
+
 /*Table struct*/
 typedef struct s_table
 {
@@ -44,20 +57,10 @@ typedef struct s_table
 	int				max_meals;
 	bool			sim_end;
 	pthread_mutex_t	guilty_spark;
+	pthread_mutex_t	meal_check;
+	pthread_mutex_t	fork[300];
+	t_philo			philo[300];
 }					t_table;
-
-/*Philosophers struct*/
-typedef struct s_philo
-{
-	int				id;
-	int				meal_count;
-	int				last_meal_time;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
-	pthread_t		thread_id;
-	int				start_time;
-	t_table			*table;
-}					t_philo;
 
 //- - Functions
 void			err_exit(char *s);
