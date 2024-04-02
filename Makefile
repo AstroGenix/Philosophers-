@@ -1,6 +1,6 @@
 #Compiler and flags
 CC    = cc -g
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -lpthread
 
 # Colours                                                                                                
 BGRED   = \033[0;41m
