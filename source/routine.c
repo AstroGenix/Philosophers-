@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/02 11:18:34 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:45:10 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@ static void	nap(long long time, t_table *val)
 	}
 }
 
+static void	grab_fork(t_philo *me, t_table *val)
+{
+	if (me->id % 2)
+	{
+		pthread_mutex_lock(&(val->fork[me->l_fork]));
+		monitor(me, "has taken a fork");
+		pthread_mutex_lock(&(val->fork[me->r_fork]));
+		monitor(me, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(&(val->fork[me->r_fork]));
+		monitor(me, "has taken a fork");
+		pthread_mutex_lock(&(val->fork[me->l_fork]));
+		monitor(me, "has taken a fork");
+	}
+}
+
 /**
  * Handles the eating routine for a philosopher.
  * • Locks the left and right fork mutexes to simulate taking forks.
@@ -61,19 +79,16 @@ static void	eat(t_philo *me)
 	t_table	*val;
 
 	val = me->table;
-	pthread_mutex_lock(&(val->fork[me->l_fork]));
-	monitor(me, "has taken a fork");
-	pthread_mutex_lock(&(val->fork[me->r_fork]));
-	monitor(me, "has taken a fork");
+	grab_fork(me, val);
 	pthread_mutex_lock(&me->table->guilty_spark);
 	monitor(me, "is eating");
 	me->last_meal_time = get_current_time();
+	(me->meal_count)++;
 	pthread_mutex_unlock(&me->table->guilty_spark);
 	nap(val->time_to_eat, val);
-	(me->meal_count)++;
-	pthread_mutex_unlock(&(val->fork[me->l_fork]));
-	monitor(me, "has dropped a fork");
 	pthread_mutex_unlock(&(val->fork[me->r_fork]));
+	monitor(me, "has dropped a fork");
+	pthread_mutex_unlock(&(val->fork[me->l_fork]));
 	monitor(me, "has dropped a fork");
 }
 

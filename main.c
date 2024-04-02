@@ -48,13 +48,13 @@ void	cleanup(t_table *val)
 {
 	int	i;
 
-	i = 0;
+	i = val->philo_num;
 	pthread_mutex_destroy(&val->guilty_spark);
 	pthread_mutex_destroy(&val->write_lock);
 	while (i < val->philo_num)
 	{
 		pthread_mutex_destroy(&(val->fork[i]));
-		i++;
+		i--;
 	}
 	return ;
 }
