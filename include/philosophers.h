@@ -49,11 +49,12 @@ typedef struct s_philo
 /*Table struct*/
 typedef struct s_table
 {
-	int				philo_num;
+	int				total_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_meals;
+	int				all_have_eaten;
 	bool			sim_end;
 	long long		sim_start_time;
 	pthread_mutex_t	guilty_spark;

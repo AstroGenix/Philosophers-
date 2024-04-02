@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/02 12:45:10 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:40:58 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,6 @@ static void	nap(long long time, t_table *val)
 	}
 }
 
-static void	grab_fork(t_philo *me, t_table *val)
-{
-	if (me->id % 2)
-	{
-		pthread_mutex_lock(&(val->fork[me->l_fork]));
-		monitor(me, "has taken a fork");
-		pthread_mutex_lock(&(val->fork[me->r_fork]));
-		monitor(me, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(&(val->fork[me->r_fork]));
-		monitor(me, "has taken a fork");
-		pthread_mutex_lock(&(val->fork[me->l_fork]));
-		monitor(me, "has taken a fork");
-	}
-}
-
 /**
  * Handles the eating routine for a philosopher.
  * • Locks the left and right fork mutexes to simulate taking forks.
@@ -79,17 +61,18 @@ static void	eat(t_philo *me)
 	t_table	*val;
 
 	val = me->table;
-	grab_fork(me, val);
-	pthread_mutex_lock(&me->table->guilty_spark);
+	pthread_mutex_lock(&(val->fork[me->l_fork]));
+	monitor(me, "has taken a fork");
+	pthread_mutex_lock(&(val->fork[me->r_fork]));
+	monitor(me, "has taken a fork");
+	pthread_mutex_lock(&(me->table->guilty_spark));
 	monitor(me, "is eating");
 	me->last_meal_time = get_current_time();
-	(me->meal_count)++;
-	pthread_mutex_unlock(&me->table->guilty_spark);
+	(me->meal_count)++;//CHANGE
+	pthread_mutex_unlock(&(me->table->guilty_spark));
 	nap(val->time_to_eat, val);
 	pthread_mutex_unlock(&(val->fork[me->r_fork]));
-	monitor(me, "has dropped a fork");
 	pthread_mutex_unlock(&(val->fork[me->l_fork]));
-	monitor(me, "has dropped a fork");
 }
 
 /**
@@ -107,7 +90,7 @@ void	*routine(void *philo)
 
 	me = (t_philo *)philo;
 	val = me->table;
-	if (me->table->philo_num == 1)
+	if (me->table->total_philo == 1)
 	{
 		monitor(me, "has taken a fork");
 		return (NULL);
@@ -117,10 +100,10 @@ void	*routine(void *philo)
 	while (val->sim_end == false)
 	{
 		eat(me);
-		monitor(me, "is sleeping.");
-		nap(val->time_to_sleep, val);
-		if (val->sim_end == true)
+		if (val->all_have_eaten)
 			break ;
+		monitor(me, "is sleeping");
+		nap(val->time_to_sleep, val);
 		monitor(me, "is thinking");
 	}
 	return (NULL);
