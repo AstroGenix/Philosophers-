@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:06:57 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/24 01:36:31 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/02 10:04:37 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ void	monitor(t_philo *philo, char *msg)
 {
 	int	time;
 
-	pthread_mutex_lock(&philo->table->guilty_spark);// Lock the simulation-wide mutex to ensure thread-safe access.
+	pthread_mutex_lock(&philo->table->write_lock);// Lock the simulation-wide mutex to ensure thread-safe access.
 	if (philo->table->sim_end)// If the simulation has ended, unlock the mutex and return early.
 	{
-		pthread_mutex_unlock(&philo->table->guilty_spark);
+		pthread_mutex_unlock(&philo->table->write_lock);
 		return ;
 	}
-	time = cur_time() - philo->start_time;// Calculate the time since the philosopher's start time.
+	time = cur_time() - philo->table->sim_start_time;// Calculate the time since the philosopher's start time.
 	log_action(philo->id, msg, time); // Log the action with a relative timestamp.
-	pthread_mutex_unlock(&philo->table->guilty_spark);// Unlock the simulation-wide mutex.
+	pthread_mutex_unlock(&philo->table->write_lock);// Unlock the simulation-wide mutex.
 }

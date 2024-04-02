@@ -15,8 +15,6 @@
 int	main(int argn, char *args[])
 {
 	t_table			table;
-	t_philo			*philo;
-	pthread_mutex_t	*fork;
 
 	if (argn != 5 && argn != 6)
 		err_exit("Incorrect number of arguments");
@@ -24,50 +22,52 @@ int	main(int argn, char *args[])
 		err_exit("One or more arguments are not numbers");
 	if (init_values(&table, args) == true)
 		err_exit("One or more arguments have invalid values");
-	fork = init_fork(&table);
-	philo = init_philo(&table, fork);
-	create_join_threads(&table, fork, philo);
-	cleanup(&table, fork, philo);
+	if (init_fork(&table) == true)
+		err_exit("Fork initiation has failed");
+	init_philo(&table);
+	create_threads(&table);
+	cleanup(&table);
 	return (0);
 }
 
-void	cleanup(t_table *val, pthread_mutex_t *fork, t_philo *philo)
+void	cleanup(t_table *val)
 {
 	int	i;
 
 	i = 0;
 	pthread_mutex_destroy(&val->guilty_spark);
-	if (fork)
+	pthread_mutex_destroy(&val->write_lock);
+	while (i < val->philo_num)
 	{
-		while (i < val->philo_num)
-		{
-			pthread_mutex_destroy(&fork[i]);
-			i++;
-		}
-		free(fork);
+		pthread_mutex_destroy(&(val->fork[i]));
+		i++;
 	}
-	if (philo)
-		free(philo);
+	return ;
 }
 
 //Create then join the threads
-void	create_join_threads(t_table *val, pthread_mutex_t *fork, t_philo *philo)
+void	create_threads(t_table *val)
 {
-	int	i;
+	int		i;
+	t_philo	*philo;
 
-	i = -1;
-	while (++i < val->philo_num)
+	i = 0;
+	philo = val->philo;
+	val->sim_start_time = cur_time();
+	while (i < val->philo_num)
 	{
-		philo[i].start_time = cur_time();
 		if (pthread_create(&philo[i].thread_id, NULL, routine, (void *)&philo[i]) != 0)
 			err_exit("Could not create philo thread");
+		philo[i].last_meal_time = cur_time();
+		i++;
 	}
 	catch_end_clause(val, philo);
-	i = -1;
-	while (++i < val->philo_num)
+	i = 0;
+	while (i < val->philo_num)
 	{	
 		if (pthread_join(philo[i].thread_id, NULL) != 0)
 			err_exit("Could not join philo thread");
+		i++;
 	}
 	return ;
 }

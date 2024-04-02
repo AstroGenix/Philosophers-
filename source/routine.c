@@ -6,73 +6,72 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/03/24 01:50:55 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/02 10:04:19 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
-static void nap(t_philo *me)
+static long long time_diff(long long past, long long pres)
 {
-	monitor(me, "is sleeping.");
-	usleep(me->table->time_to_sleep * 1000);
+	return(pres - past);
 }
 
-static int grab_fork(t_philo *me)
+static void nap(long long time, t_table *val)
 {
-	if (me->id % 2 == 0)
-		pthread_mutex_lock(me->l_fork);
-	else
-		pthread_mutex_lock(me->r_fork);
-	if (!(me->table->sim_end))
-		monitor(me, "has taken a fork");
-	if (me->id % 2 == 0)
+	long long i;
+
+	i = cur_time();
+	while (val->sim_end == false)
 	{
-		if (pthread_mutex_lock(me->r_fork) != 0)
-			return (pthread_mutex_unlock(me->l_fork), 1);
-		if (!(me->table->sim_end))
-			monitor(me, "has taken a fork");
+		if (time_diff(i, cur_time()) >= time)
+			break ;
+		usleep(50);
 	}
-	else
-	{
-		if (pthread_mutex_lock(me->l_fork) != 0)
-			return (pthread_mutex_unlock(me->r_fork), 1);
-		if (!(me->table->sim_end))
-			monitor(me, "has taken a fork");
-	}
-	return(0);
 }
 
 static void eat(t_philo *me)
 {
-	
-	grab_fork(me);
-	monitor(me, "is eating");
+	t_table	*val;
+
+	val = me->table;
+	pthread_mutex_lock(&(val->fork[me->l_fork]));
+	monitor(me, "has taken a fork");
+	pthread_mutex_lock(&(val->fork[me->r_fork]));
+	monitor(me, "has taken a fork");
 	pthread_mutex_lock(&me->table->guilty_spark);
+	monitor(me, "is eating");
 	me->last_meal_time = cur_time();
-	(me->meal_count)++;
 	pthread_mutex_unlock(&me->table->guilty_spark);
-	usleep(me->table->time_to_eat * 1000);
-	pthread_mutex_unlock(me->r_fork);
+	nap(val->time_to_eat, val);
+	(me->meal_count)++;
+	pthread_mutex_unlock(&(val->fork[me->l_fork]));
 	monitor(me, "has dropped a fork");
-	pthread_mutex_unlock(me->l_fork);
+	pthread_mutex_unlock(&(val->fork[me->r_fork]));
 	monitor(me, "has dropped a fork");
 }
 
 void	*routine(void *philo)
 {
 	t_philo *me;
+	t_table	*val;
 	
 	me = (t_philo *)philo;
+	val = me->table;
 	if (me->table->philo_num == 1)
 	{
 		monitor(me, "has taken a fork");
 		return (NULL);
 	}
-	while (!(me->table->sim_end))
+	if (me->id % 2)
+		usleep(10000);
+	while (val->sim_end == false)
 	{
 		eat(me);
-		nap(me);
+		monitor(me, "is sleeping.");
+		nap(val->time_to_sleep, val);
+		if (val->sim_end == true)
+			break ;
 		monitor(me, "is thinking");
 	}
 	return (NULL);

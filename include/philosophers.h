@@ -33,15 +33,16 @@
 # define C		"\033[36m"	/*Cyan   */
 
 //- - Structures
+struct s_table;
 
 /*Philosophers struct*/
 typedef struct s_philo
 {
 	int				id;
 	int				meal_count;
-	long long		last_meal_time;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
+	int				last_meal_time;
+	int				r_fork;
+	int				l_fork;
 	pthread_t		thread_id;
 	struct s_table	*table;
 }					t_philo;
@@ -56,24 +57,29 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				max_meals;
 	bool			sim_end;
+	long long		sim_start_time;
 	pthread_mutex_t	guilty_spark;
-	pthread_mutex_t	meal_check;
+	pthread_mutex_t	write_lock;
 	pthread_mutex_t	fork[300];
 	t_philo			philo[300];
 }					t_table;
 
 //- - Functions
-void			err_exit(char *s);
-int				philo_start(int argn, char **args);
-bool			arg_check(int argn, char **args);
-int				cur_time(void);
-int				ft_atoi(const char *nptr);
-bool			init_values(t_table *val, char **args);
-pthread_mutex_t	*init_fork(t_table *val);
-t_philo			*init_philo(t_table *val, pthread_mutex_t *fork);
-void			*routine(void *philo);
-void			catch_end_clause(t_table *val, t_philo *philo);
-void			cleanup(t_table *val, pthread_mutex_t *fork, t_philo *philo);
-void			create_join_threads(t_table *val, pthread_mutex_t *fork, t_philo *philo);
-void			monitor(t_philo *philo, char *msg);
+void	cleanup(t_table *val);
+void	create_threads(t_table *val);
+//end_sim.c
+void	catch_end_clause(t_table *val, t_philo *philo);
+//init.c
+bool	init_values(t_table *val, char **args);
+bool	init_fork(t_table *val);
+void 	init_philo(t_table *val);
+//monitor.c
+void	monitor(t_philo *philo, char *msg);
+//routine.c
+void	*routine(void *philo);
+//utils.c
+int		cur_time(void);
+bool	arg_check(int argn, char **args);
+void	err_exit(char *s);
+int		ft_atoi(const char *nptr);
 #endif
