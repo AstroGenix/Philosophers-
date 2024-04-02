@@ -33,7 +33,6 @@
 # define C		"\033[36m"	/*Cyan   */
 
 //- - Structures
-struct s_table;
 
 /*Philosophers struct*/
 typedef struct s_philo
@@ -46,7 +45,6 @@ typedef struct s_philo
 	pthread_t		thread_id;
 	struct s_table	*table;
 }					t_philo;
-
 
 /*Table struct*/
 typedef struct s_table
@@ -71,14 +69,14 @@ void	create_threads(t_table *val);
 void	catch_end_clause(t_table *val, t_philo *philo);
 //init.c
 bool	init_values(t_table *val, char **args);
-bool	init_fork(t_table *val);
-void 	init_philo(t_table *val);
+void	init_fork(t_table *val);
+void	init_philo(t_table *val);
 //monitor.c
 void	monitor(t_philo *philo, char *msg);
 //routine.c
 void	*routine(void *philo);
 //utils.c
-int		cur_time(void);
+int		get_current_time(void);
 bool	arg_check(int argn, char **args);
 void	err_exit(char *s);
 int		ft_atoi(const char *nptr);
