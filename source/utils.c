@@ -48,7 +48,10 @@ bool	arg_check(int argn, char **args)
 		while (args[i][j])
 		{
 			if (args[i][j] < '0' || args[i][j] > '9')
+			{
+				err_exit("Invalid argument");
 				return (true);
+			}
 			j++;
 		}
 		i++;
@@ -83,7 +86,7 @@ void	err_exit(char *msg)
 {
 	helper_print();
 	printf("\e[41mError:\e[0m" R " %s\n" RST, msg);
-	exit (1);
+	return ;
 }
 
 /**

@@ -16,7 +16,7 @@ static long long	time_diff(long long past, long long pres)
 {
 	return (pres - past);
 }
-void	x(t_table *val, t_philo *philo)
+static void	check_all_philos_eaten(t_table *val, t_philo *philo)
 {
 	int	i;
 
@@ -26,6 +26,7 @@ void	x(t_table *val, t_philo *philo)
 	if (i == val->total_philo)
 	{
 		val->all_have_eaten = true;
+		val->sim_end == true;
 	}
 }
 
@@ -36,20 +37,23 @@ void	catch_end_clause(t_table *val, t_philo *philo)
 	while (val->all_have_eaten == false)
 	{
 		i = 0;
-		while (i < val->total_philo && val->sim_end == false)
+		while (i < val->total_philo)
 		{
 			pthread_mutex_lock(&(val->guilty_spark));
 			if (time_diff(philo[i].last_meal_time, get_current_time()) > val->time_to_die)
 			{
 				monitor(philo, "died");
 				val->sim_end = true;
+				pthread_mutex_unlock(&(val->guilty_spark));
+				break ;
 			}
 			pthread_mutex_unlock(&(val->guilty_spark));
-			usleep(100);
 			i++;
 		}
 		if (val->sim_end == true)
 			break ;
-		x(val, philo);
+		pthread_mutex_lock(&(val->guilty_spark));
+		check_all_philos_eaten(val, philo);
+		pthread_mutex_unlock(&(val->guilty_spark));
 	}
 }

@@ -65,12 +65,13 @@ typedef struct s_table
 
 //- - Functions
 void	cleanup(t_table *val);
-void	create_threads(t_table *val);
+bool	create_threads(t_table *val);
+bool	join_threads(t_table *val, t_philo *philo);
 //end_sim.c
 void	catch_end_clause(t_table *val, t_philo *philo);
 //init.c
 bool	init_values(t_table *val, char **args);
-void	init_fork(t_table *val);
+bool	init_fork(t_table *val);
 void	init_philo(t_table *val);
 //monitor.c
 void	monitor(t_philo *philo, char *msg);

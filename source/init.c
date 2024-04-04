@@ -34,9 +34,9 @@ bool	init_values(t_table *val, char **args)
 	if (val->total_philo == 0 || val->max_meals == 0)
 		return (true);
 	if (pthread_mutex_init(&(val->guilty_spark), NULL) != 0)
-		err_exit("Could not init 'guilty_spark' mutex");
+		return (true);
 	if (pthread_mutex_init(&(val->write_lock), NULL) != 0)
-		err_exit("Could not init 'write_lock' mutex");
+		return (true);
 	val->sim_end = false;
 	val->sim_start_time = 0;
 	val->all_have_eaten = false;
@@ -50,7 +50,7 @@ bool	init_values(t_table *val, char **args)
  *
  * @param val The simulation table containing the forks.
  */
-void	init_fork(t_table *val)
+bool	init_fork(t_table *val)
 {
 	int				i;
 
@@ -58,10 +58,13 @@ void	init_fork(t_table *val)
 	while (i < val->total_philo)
 	{
 		if (pthread_mutex_init(&(val->fork[i]), NULL) != 0)
+		{
 			err_exit("Could not initialize fork");
+			return (true);
+		}
 		i++;
 	}
-	return ;
+	return (false);
 }
 
 /**
