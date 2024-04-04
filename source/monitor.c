@@ -23,6 +23,10 @@
  * @param i The philosopher's ID, used to identify and colorcode the log entry.
  * @param msg The action or event to log (e.g., "has taken a fork").
  * @param time The time elapsed since the simulation started, in milliseconds.
+ * 
+	printf("%ld ", time);
+	printf("%i ", i);
+	printf("%s\n", msg);
  */
 static void	log_action(int i, char *msg, suseconds_t time)
 {
