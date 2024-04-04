@@ -41,7 +41,7 @@ void	catch_end_clause(t_table *val, t_philo *philo)
 			pthread_mutex_lock(&(val->guilty_spark));
 			if (time_diff(philo[i].last_meal_time, get_current_time()) > val->time_to_die)
 			{
-				monitor(philo, "has died");
+				monitor(philo, "died");
 				val->sim_end = true;
 			}
 			pthread_mutex_unlock(&(val->guilty_spark));

@@ -99,9 +99,9 @@ void	*routine(void *philo)
 		usleep(10000);
 	while (val->sim_end == false)
 	{
-		eat(me);
 		if (val->all_have_eaten)
 			break ;
+		eat(me);
 		monitor(me, "is sleeping");
 		nap(val->time_to_sleep, val);
 		monitor(me, "is thinking");
