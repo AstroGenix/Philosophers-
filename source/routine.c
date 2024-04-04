@@ -12,11 +12,6 @@
 
 #include "../include/philosophers.h"
 
-static long long	time_diff(long long past, long long pres)
-{
-	return (pres - past);
-}
-
 static void	nap(long long time, t_table *val)
 {
 	long long	timestamp;
@@ -74,6 +69,18 @@ static void	eat(t_philo *me)
 	}
 }
 
+static bool	check_end_clause(t_table *val, t_philo *me)
+{
+	pthread_mutex_lock(&(val->guilty_spark));
+	if (val->all_have_eaten == true || val->sim_end == true)
+	{
+   		pthread_mutex_unlock(&(val->guilty_spark));
+		return (true);
+	}
+	pthread_mutex_unlock(&(val->guilty_spark));
+	return (false);
+}
+
 void	*routine(void *philo)
 {
 	t_philo	*me;
@@ -90,13 +97,8 @@ void	*routine(void *philo)
 		usleep(10000);
 	while (true)
 	{
-		pthread_mutex_lock(&(val->guilty_spark));
-		if (val->all_have_eaten == true || val->sim_end == true)
-		{
-   			pthread_mutex_unlock(&(val->guilty_spark));
-			return (NULL);
-		}
-		pthread_mutex_unlock(&(val->guilty_spark));
+		if (check_end_clause(val, me))
+			break ;
 		eat(me);
 		monitor(me, "is sleeping");
 		nap(val->time_to_sleep, val);

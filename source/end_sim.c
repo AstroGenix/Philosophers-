@@ -12,7 +12,7 @@
 
 #include "../include/philosophers.h"
 
-static long long	time_diff(long long past, long long pres)
+long long	time_diff(long long past, long long pres)
 {
 	return (pres - past);
 }
@@ -43,7 +43,9 @@ void	catch_end_clause(t_table *val, t_philo *philo)
 			if (time_diff(philo[i].last_meal_time, get_current_time()) > val->time_to_die)
 			{
 				monitor(&philo[i], "died");
+				pthread_mutex_lock(&(val->write_lock));
 				val->sim_end = true;
+				pthread_mutex_unlock(&(val->write_lock));
 				pthread_mutex_unlock(&(val->guilty_spark));
 				break ;
 			}

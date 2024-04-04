@@ -64,22 +64,23 @@ typedef struct s_table
 }					t_table;
 
 //- - Functions
-void	cleanup(t_table *val);
-bool	create_threads(t_table *val);
-bool	join_threads(t_table *val, t_philo *philo);
+void		cleanup(t_table *val);
+bool		create_threads(t_table *val);
+bool		join_threads(t_table *val, t_philo *philo);
 //end_sim.c
-void	catch_end_clause(t_table *val, t_philo *philo);
+void		catch_end_clause(t_table *val, t_philo *philo);
+long long	time_diff(long long past, long long pres);
 //init.c
-bool	init_values(t_table *val, char **args);
-bool	init_fork(t_table *val);
-void	init_philo(t_table *val);
+bool		init_values(t_table *val, char **args);
+bool		init_fork(t_table *val);
+void		init_philo(t_table *val);
 //monitor.c
-void	monitor(t_philo *philo, char *msg);
+void		monitor(t_philo *philo, char *msg);
 //routine.c
-void	*routine(void *philo);
+void		*routine(void *philo);
 //utils.c
-int		get_current_time(void);
-bool	arg_check(int argn, char **args);
-void	err_exit(char *s);
-int		ft_atoi(const char *nptr);
+int			get_current_time(void);
+bool		arg_check(int argn, char **args);
+void		err_exit(char *s);
+int			ft_atoi(const char *nptr);
 #endif
