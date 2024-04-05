@@ -16,7 +16,9 @@ int	main(int argn, char *args[])
 {
 	t_table			table;
 
-	if ((argn != 5 && argn != 6) && arg_check(argn, args) == true)
+	if (argn != 5 && argn != 6)
+		return (1);
+	if (arg_check(argn, args) == true)
 		return (1);
 	if (init_values(&table, args) == true)
 		return (1);
