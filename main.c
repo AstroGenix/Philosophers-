@@ -29,6 +29,11 @@ int	main(int argn, char *args[])
 	return (0);
 }
 
+/**
+ * Cleans up resources at the end of the simulation.
+ * 
+ * @param val The table struct.
+ */
 void	cleanup(t_table *val)
 {
 	int	i;
@@ -44,6 +49,13 @@ void	cleanup(t_table *val)
 	return ;
 }
 
+/**
+ * Joins all philosopher threads.
+ * 
+ * @param val The table struct.
+ * @param philo Array of philosopher structs.
+ * @return true if thread joining fails, false otherwise.
+ */
 bool	join_threads(t_table *val, t_philo *philo)
 {
 	int	i;
@@ -63,6 +75,14 @@ bool	join_threads(t_table *val, t_philo *philo)
 	return (false);
 }
 
+/**
+ * Creates and starts threads for each philosopher.
+ * Initializes the simulation start time and the philosopher's last meal time.
+ * Handles the end of the simulation and waits for all threads to finish.
+ * 
+ * @param val The table struct.
+ * @return true if thread creation or joining fails, false otherwise.
+ */
 bool	create_threads(t_table *val)
 {
 	int		i;

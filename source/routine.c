@@ -12,6 +12,13 @@
 
 #include "../include/philosophers.h"
 
+/**
+ * Makes the philosopher nap for a specified time.
+ * The function waits until the specified time has passed.
+ * 
+ * @param time The time to nap in milliseconds.
+ * @param val The table struct.
+ */
 static void	nap(long long time, t_table *val)
 {
 	long long	timestamp;
@@ -25,6 +32,14 @@ static void	nap(long long time, t_table *val)
 	}
 }
 
+/**
+ * Represents a philosopher grabbing a fork.
+ * The philosopher tries to take the left and right fork.
+ * The order depends on the philosopher's ID to prevent deadlock.
+ * A message is logged after successfully taking a fork.
+ * 
+ * @param me The philosopher struct.
+ */
 static void grab_fork(t_philo *me)
 {
 	t_table	*val;
@@ -45,6 +60,13 @@ static void grab_fork(t_philo *me)
 		monitor(me, "has taken a fork");
 	}
 }
+
+/**
+ * Represents a philosopher's eating action.
+ * The philosopher takes forks, eats, then drops forks.
+ * 
+ * @param philo The philosopher struct.
+ */
 static void	eat(t_philo *me)
 {
 	t_table	*val;
@@ -69,6 +91,13 @@ static void	eat(t_philo *me)
 	}
 }
 
+/**
+ * Checks if the simulation should end.
+ * If all philosophers have eaten enough, it ends the simulation.
+ * 
+ * @param val The table struct.
+ * @param philo Array of philosopher structs.
+ */
 static bool	check_end_clause(t_table *val, t_philo *me)
 {
 	pthread_mutex_lock(&(val->guilty_spark));
@@ -81,6 +110,15 @@ static bool	check_end_clause(t_table *val, t_philo *me)
 	return (false);
 }
 
+/**
+ * Represents a philosopher's routine.
+ * If only one philosopher, they take a fork and end.
+ * If philosopher's ID is odd, they wait briefly.
+ * Then they loop to eat, sleep, and think until simulation ends.
+ * 
+ * @param philo The philosopher struct.
+ * @return NULL always.
+ */
 void	*routine(void *philo)
 {
 	t_philo	*me;

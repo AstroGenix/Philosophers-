@@ -44,11 +44,13 @@ bool	init_values(t_table *val, char **args)
 }
 
 /**
- * Initializes mutexes for each available fork.
- * • Each philosopher has a left and right fork, represented by a mutex.
- * • Forks are shared resources, necessitating mutexes to avoid data races.
+ * Initializes forks for the simulation.
+ * • Allocates memory for the number of forks equal to the number of
+ * 	 philosophers.
+ * • Initializes each fork with a mutex lock.
  *
- * @param val The simulation table containing the forks.
+ * @param val The simulation table with forks to initialize.
+ * @return True if any error occurs during fork initialization, else false.
  */
 bool	init_fork(t_table *val)
 {

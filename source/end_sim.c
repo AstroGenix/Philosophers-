@@ -12,12 +12,28 @@
 
 #include "../include/philosophers.h"
 
+/**
+ * Calculates the time difference between two timestamps.
+ * 
+ * @param past The past timestamp.
+ * @param pres The present timestamp.
+ * @return The difference between the two timestamps.
+ */
 long long	time_diff(long long past, long long pres)
 {
 	return (pres - past);
 }
+
+/**
+ * Checks if all philosophers have eaten the maximum number of meals.
+ * If so, it sets the simulation to end.
+ * 
+ * @param val The table struct.
+ * @param philo Array of philosopher structs.
+ */
 static void	check_all_philos_eaten(t_table *val, t_philo *philo)
 {
+	pthread_mutex_lock(&(val->guilty_spark));
 	int	i;
 
 	i = 0;
@@ -28,8 +44,17 @@ static void	check_all_philos_eaten(t_table *val, t_philo *philo)
 		val->all_have_eaten = true;
 		val->sim_end == true;
 	}
+	pthread_mutex_unlock(&(val->guilty_spark));
 }
 
+/**
+ * Checks if the simulation should end.
+ * If a philosopher has died or all philosophers have eaten the maximum number
+ * of meals, it sets the simulation to end.
+ * 
+ * @param val The table struct.
+ * @param philo Array of philosopher structs.
+ */
 void	catch_end_clause(t_table *val, t_philo *philo)
 {
 	int i;
@@ -54,8 +79,6 @@ void	catch_end_clause(t_table *val, t_philo *philo)
 		}
 		if (val->sim_end == true)
 			break ;
-		pthread_mutex_lock(&(val->guilty_spark));
 		check_all_philos_eaten(val, philo);
-		pthread_mutex_unlock(&(val->guilty_spark));
 	}
 }
