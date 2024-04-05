@@ -1,7 +1,7 @@
 #Compiler and flags
 CC    = cc -g
 CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -fsanitize=thread
+LDFLAGS = -lpthread
 
 # Colours                                                                                                
 BGRED   = \033[0;41m
