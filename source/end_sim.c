@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 10:22:47 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/05 15:45:40 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:54:50 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ long long	time_diff(long long past, long long pres)
  */
 static void	check_all_philos_eaten(t_table *val, t_philo *philo)
 {
-	pthread_mutex_lock(&(val->guilty_spark));
 	int	i;
 
+	pthread_mutex_lock(&(val->guilty_spark));
 	i = 0;
-	while (val->max_meals != -1 && i < val->total_philo && philo[i].meal_count >= val->max_meals)
+	while (val->max_meals != -1 && i < val->total_philo
+		&& philo[i].meal_count >= val->max_meals)
 		i++;
 	if (i == val->total_philo)
 	{
@@ -57,7 +58,7 @@ static void	check_all_philos_eaten(t_table *val, t_philo *philo)
  */
 void	catch_end_clause(t_table *val, t_philo *philo)
 {
-	int i;
+	int	i;
 
 	while (val->all_have_eaten == false)
 	{
@@ -65,7 +66,8 @@ void	catch_end_clause(t_table *val, t_philo *philo)
 		while (i < val->total_philo)
 		{
 			pthread_mutex_lock(&(val->guilty_spark));
-			if (time_diff(philo[i].last_meal_time, get_current_time()) > val->time_to_die)
+			if (time_diff(philo[i].last_meal_time,
+					get_current_time()) > val->time_to_die)
 			{
 				monitor(&philo[i], "died");
 				pthread_mutex_lock(&(val->write_lock));

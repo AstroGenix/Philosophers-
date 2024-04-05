@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/05 16:31:31 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:57:13 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static void	nap(long long time)
  * 
  * @param me The philosopher struct.
  */
-static void grab_fork(t_philo *me)
+static void	grab_fork(t_philo *me)
 {
 	t_table	*val;
 
 	val = me->table;
-	if (me->id % 2 == 0)
+	if (me->l_fork < me->r_fork)
 	{
 		pthread_mutex_lock(&(val->fork[me->l_fork]));
 		monitor(me, "has taken a fork");
@@ -75,7 +75,7 @@ static void	eat(t_philo *me)
 	pthread_mutex_lock(&(me->table->guilty_spark));
 	monitor(me, "is eating");
 	(me->meal_count)++;
-	me->last_meal_time = get_current_time(); // update last_meal_time after eating
+	me->last_meal_time = get_current_time();
 	pthread_mutex_unlock(&(me->table->guilty_spark));
 	nap(val->time_to_eat);
 	if (me->id % 2 == 0)
@@ -102,7 +102,7 @@ static bool	check_end_clause(t_table *val)
 	pthread_mutex_lock(&(val->guilty_spark));
 	if (val->all_have_eaten == true || val->sim_end == true)
 	{
-   		pthread_mutex_unlock(&(val->guilty_spark));
+		pthread_mutex_unlock(&(val->guilty_spark));
 		return (true);
 	}
 	pthread_mutex_unlock(&(val->guilty_spark));

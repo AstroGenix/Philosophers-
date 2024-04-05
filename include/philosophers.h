@@ -59,8 +59,8 @@ typedef struct s_table
 	long long		sim_start_time;
 	pthread_mutex_t	guilty_spark;
 	pthread_mutex_t	write_lock;
-	pthread_mutex_t	fork[300];
-	t_philo			philo[300];
+	pthread_mutex_t	fork[250];
+	t_philo			philo[250];
 }					t_table;
 
 //- - Functions

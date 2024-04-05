@@ -25,7 +25,7 @@ int	main(int argn, char *args[])
 	if (init_fork(&table) == true)
 		return (1);
 	init_philo(&table);
-	if (create_threads(&table)	== true)
+	if (create_threads(&table) == true)
 		return (1);
 	cleanup(&table);
 	return (0);
@@ -82,6 +82,12 @@ bool	join_threads(t_table *val, t_philo *philo)
  * Initializes the simulation start time and the philosopher's last meal time.
  * Handles the end of the simulation and waits for all threads to finish.
  * 
+ * 	i = 0;
+	while (i < val->total_philo)
+	{
+		printf("philo[%d].meal_count = %d\n", i, philo[i].meal_count);
+		i++;
+	}
  * @param val The table struct.
  * @return true if thread creation or joining fails, false otherwise.
  */
@@ -95,12 +101,12 @@ bool	create_threads(t_table *val)
 	val->sim_start_time = get_current_time();
 	while (i < val->total_philo)
 	{
-		if (pthread_create(&philo[i].thread_id, NULL, routine,
-				(void *)&philo[i]) != 0)
-			{
-				err_exit("Could not create philo thread");
-				return (true);
-			}
+		if (pthread_create(&philo[i].thread_id, NULL,
+				routine, (void *)&philo[i]) != 0)
+		{
+			err_exit("Could not create philo thread");
+			return (true);
+		}
 		pthread_mutex_lock(&(philo[i].table->guilty_spark));
 		philo[i].last_meal_time = get_current_time();
 		pthread_mutex_unlock(&(philo[i].table->guilty_spark));
