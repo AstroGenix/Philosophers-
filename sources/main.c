@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/philosophers.h"
+#include "../include/philosophers.h"
 
 int	main(int argn, char *args[])
 {
@@ -73,7 +73,7 @@ bool	join_threads(t_table *val, t_philo *philo)
 		i++;
 	}
 	if (val->all_have_eaten == true)
-		printf("All philosophers have finished dining.\n");
+		printf("All philosophers have eaten at least %i meals\n", val->max_meals);
 	return (false);
 }
 
@@ -101,19 +101,20 @@ bool	create_threads(t_table *val)
 	val->sim_start_time = get_current_time();
 	while (i < val->total_philo)
 	{
+		philo[i].last_meal_time = get_current_time();
 		if (pthread_create(&philo[i].thread_id, NULL,
 				routine, (void *)&philo[i]) != 0)
-		{
-			err_exit("Could not create philo thread");
-			return (true);
-		}
-		pthread_mutex_lock(&(philo[i].table->guilty_spark));
-		philo[i].last_meal_time = get_current_time();
-		pthread_mutex_unlock(&(philo[i].table->guilty_spark));
+			return (err_exit("Could not create philo thread"), true);
 		i++;
 	}
 	catch_end_clause(val, val->philo);
 	if (join_threads(val, philo) == true)
 		return (true);
+	i = 0;
+	while (i < val->total_philo)
+	{
+		printf("philo[%d].meal_count = %d\n", i, philo[i].meal_count);
+		i++;
+	}
 	return (false);
 }
