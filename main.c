@@ -18,7 +18,7 @@ int	main(int argn, char *args[])
 
 	if (argn != 5 && argn != 6)
 		return (1);
-	if (arg_check(argn, args) == true)
+	if (arg_check(args) == true)
 		return (1);
 	if (init_values(&table, args) == true)
 		return (1);

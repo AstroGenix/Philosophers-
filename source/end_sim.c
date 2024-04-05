@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 10:22:47 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/02 17:33:16 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:45:40 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	check_all_philos_eaten(t_table *val, t_philo *philo)
 	if (i == val->total_philo)
 	{
 		val->all_have_eaten = true;
-		val->sim_end == true;
+		val->sim_end = true;
 	}
 	pthread_mutex_unlock(&(val->guilty_spark));
 }

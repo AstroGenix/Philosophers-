@@ -80,7 +80,7 @@ void		monitor(t_philo *philo, char *msg);
 void		*routine(void *philo);
 //utils.c
 int			get_current_time(void);
-bool		arg_check(int argn, char **args);
+bool		arg_check(char **args);
 void		err_exit(char *s);
 int			ft_atoi(const char *nptr);
 #endif

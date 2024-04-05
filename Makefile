@@ -1,6 +1,7 @@
 #Compiler and flags
 CC    = cc -g
-FLAGS = -Wall -Wextra -Werror -lpthread
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -fsanitize=thread
 
 # Colours                                                                                                
 BGRED   = \033[0;41m
@@ -24,13 +25,13 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 		@printf "$(BGCYAN) Gathering Philosophers... $(NC)\n"
-		$(CC) $(OBJECTS) $(FLAGS) -o $(NAME)
+		$(CC) $(OBJECTS) $(CFLAGS) $(LDFLAGS) -o $(NAME)
 		@printf "$(BGCYAN) Philosophers at the table!! $(NC)\n"
 
 $(OBJECTS_DIR): $(SOURCES)
 		@printf "$(BGBLUE) Setting the table... $(NC)\n"
 		mkdir -p $(@D)
-		$(CC) -I includes $(FLAGS) -c $< -o $@
+		$(CC) -I includes $(CFLAGS) $(LDFLAGS) -c $< -o $@
 		@printf "$(BGBLUE) Table set!! $(NC)\n"
 
 clean:

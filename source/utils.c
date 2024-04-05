@@ -36,7 +36,7 @@ int	get_current_time(void)
  * @param args Array of command line argument strings.
  * @return True if any non-numeric characters are found, false otherwise.
  */
-bool	arg_check(int argn, char **args)
+bool	arg_check(char **args)
 {
 	int	i;
 	int	j;

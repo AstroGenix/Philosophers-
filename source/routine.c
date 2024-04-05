@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:55:02 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/02 16:40:58 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:31:31 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
  * The function waits until the specified time has passed.
  * 
  * @param time The time to nap in milliseconds.
- * @param val The table struct.
  */
-static void	nap(long long time, t_table *val)
+static void	nap(long long time)
 {
 	long long	timestamp;
 
@@ -78,7 +77,7 @@ static void	eat(t_philo *me)
 	(me->meal_count)++;
 	me->last_meal_time = get_current_time(); // update last_meal_time after eating
 	pthread_mutex_unlock(&(me->table->guilty_spark));
-	nap(val->time_to_eat, val);
+	nap(val->time_to_eat);
 	if (me->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&(val->fork[me->r_fork]));
@@ -98,7 +97,7 @@ static void	eat(t_philo *me)
  * @param val The table struct.
  * @param philo Array of philosopher structs.
  */
-static bool	check_end_clause(t_table *val, t_philo *me)
+static bool	check_end_clause(t_table *val)
 {
 	pthread_mutex_lock(&(val->guilty_spark));
 	if (val->all_have_eaten == true || val->sim_end == true)
@@ -135,11 +134,11 @@ void	*routine(void *philo)
 		usleep(10000);
 	while (true)
 	{
-		if (check_end_clause(val, me))
+		if (check_end_clause(val))
 			break ;
 		eat(me);
 		monitor(me, "is sleeping");
-		nap(val->time_to_sleep, val);
+		nap(val->time_to_sleep);
 		monitor(me, "is thinking");
 	}
 	return (NULL);
