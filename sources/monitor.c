@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:06:57 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/05 17:06:24 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:00:51 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	log_action(int i, char *msg, suseconds_t time)
  * @param philo The philosopher struct including the philosopher's ID and
  * pointer to the table struct.
  * @param msg The message describing the philosopher's action to log.
+ * @return true if the simulation has ended, false otherwise.
  */
 bool	monitor(t_philo *philo, char *msg)
 {

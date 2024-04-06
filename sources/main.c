@@ -32,7 +32,9 @@ int	main(int argn, char *args[])
 }
 
 /**
- * Cleans up resources at the end of the simulation.
+ * Handles the cleanup process at the end of the simulation.
+ * • Destroys the mutex for 'guilty_spark'.
+ * • Iterates through all philosophers and destroys their fork mutexes.
  * 
  * @param val The table struct.
  */

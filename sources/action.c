@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   action.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/06 16:54:09 by dberehov          #+#    #+#             */
+/*   Updated: 2024/04/06 17:19:41 by dberehov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/philosophers.h"
 
 /**
- * Makes the philosopher nap for a specified time.
- * The function waits until the specified time has passed.
+ * Handles a philosopher's sleep action.
+ * • The philosopher sleeps for a set time if simulation hasn't ended.
  * 
- * @param time The time to nap in milliseconds.
+ * @param me The philosopher struct.
+ * @return true if the simulation has ended, false if the philo is still alive.
  */
 bool	nap(t_philo *me)
 {
@@ -14,6 +27,16 @@ bool	nap(t_philo *me)
 	return (false);
 }
 
+/**
+ * Handles a philosopher's action of grabbing forks.
+ * • The philosopher attempts to acquire a lock on both left and right forks.
+ * • If the simulation has ended during this action, the philosopher drops
+ *   the forks and the function returns true.
+ *  
+ * @param me The philosopher struct.
+ * @return true  if the simulation has ended, 
+ * 		   false if the philosopher successfully grabbed the forks.
+ */
 static bool	grab_fork(t_philo *me)
 {
 	t_table	*val;
@@ -21,19 +44,25 @@ static bool	grab_fork(t_philo *me)
 	val = me->table;
 	pthread_mutex_lock(&(val->fork[me->l_fork]));
 	if (monitor(me, "has taken a fork"))
-		return (pthread_mutex_unlock(&(val->fork[me->l_fork])),true);
+		return (pthread_mutex_unlock(&(val->fork[me->l_fork])), true);
 	pthread_mutex_lock(&(val->fork[me->r_fork]));
 	if (monitor(me, "has taken a fork"))
 		return (pthread_mutex_unlock(&(val->fork[me->r_fork])),
-			pthread_mutex_unlock(&(val->fork[me->l_fork])),true);
+			pthread_mutex_unlock(&(val->fork[me->l_fork])), true);
 	return (false);
 }
 
 /**
- * Represents a philosopher's eating action.
- * The philosopher takes forks, eats, then drops forks.
+ * Handles a philosopher's action of eating.
+ * • The philosopher first attempts to grab both forks.
+ * • If successful, the philosopher eats for a specified time,
+ *   then drops the forks.
+ * • If the simulation has ended during this action,
+ * 	 the philosopher drops the forks and the function returns true.
  * 
- * @param philo The philosopher struct.
+ * @param me The philosopher struct.
+ * @return true if the simulation ended, 
+ *         false if the philosopher successfully ate.
  */
 bool	eat(t_philo *me)
 {
