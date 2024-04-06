@@ -33,7 +33,7 @@ SRC_DIR = sources/
 OBJ_DIR = objects/
 
 # Project files
-SRC_FILES = end_sim init monitor routine utils main
+SRC_FILES = end_sim init monitor routine utils main action
 
 SOURCES = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 

@@ -65,12 +65,12 @@ void	catch_end_clause(t_table *val, t_philo *philo)
 		pthread_mutex_lock(&(val->guilty_spark));
 		while (i < val->total_philo)
 		{
-			//printf("%lli > %i\n",time_diff(philo[i].last_meal_time,get_current_time()), val->time_to_die);
 			if (time_diff(philo[i].last_meal_time,get_current_time()) > val->time_to_die)
 			{
-				printf("EXIT\n");
-				val->sim_end = true;
+				pthread_mutex_unlock(&(val->guilty_spark));
 				monitor(&philo[i], "died");
+				pthread_mutex_lock(&(val->guilty_spark));
+				val->sim_end = true;
 				return((void)pthread_mutex_unlock(&(val->guilty_spark)));
 			}
 			i++;

@@ -58,15 +58,15 @@ typedef struct s_table
 	bool			sim_end;
 	long long		sim_start_time;
 	pthread_mutex_t	guilty_spark;
-	pthread_mutex_t	write_lock;
 	pthread_mutex_t	fork[250];
 	t_philo			philo[250];
 }					t_table;
 
 //- - Functions
 void		cleanup(t_table *val);
-bool		create_threads(t_table *val);
-bool		join_threads(t_table *val, t_philo *philo);
+//action.c
+bool		nap(t_philo *me);
+bool		eat(t_philo *me);
 //end_sim.c
 void		catch_end_clause(t_table *val, t_philo *philo);
 long long	time_diff(long long past, long long pres);
@@ -75,9 +75,11 @@ bool		init_values(t_table *val, char **args);
 bool		init_fork(t_table *val);
 void		init_philo(t_table *val);
 //monitor.c
-void		monitor(t_philo *philo, char *msg);
+bool		monitor(t_philo *philo, char *msg);
 //routine.c
 void		*routine(void *philo);
+bool		create_threads(t_table *val);
+bool		join_threads(t_table *val, t_philo *philo);
 //utils.c
 int			get_current_time(void);
 bool		arg_check(char **args);

@@ -51,17 +51,18 @@ static void	log_action(int i, char *msg, suseconds_t time)
  * pointer to the table struct.
  * @param msg The message describing the philosopher's action to log.
  */
-void	monitor(t_philo *philo, char *msg)
+bool	monitor(t_philo *philo, char *msg)
 {
 	int	time;
 
-	pthread_mutex_lock(&philo->table->write_lock);
+	pthread_mutex_lock(&philo->table->guilty_spark);
 	if (philo->table->sim_end)
 	{
-		pthread_mutex_unlock(&philo->table->write_lock);
-		return ;
+		pthread_mutex_unlock(&philo->table->guilty_spark);
+		return (true);
 	}
 	time = get_current_time() - philo->table->sim_start_time;
 	log_action(philo->id, msg, time);
-	pthread_mutex_unlock(&philo->table->write_lock);
+	pthread_mutex_unlock(&philo->table->guilty_spark);
+	return (false);
 }

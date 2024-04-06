@@ -35,8 +35,6 @@ bool	init_values(t_table *val, char **args)
 		return (true);
 	if (pthread_mutex_init(&(val->guilty_spark), NULL) != 0)
 		return (true);
-	if (pthread_mutex_init(&(val->write_lock), NULL) != 0)
-		return (true);
 	val->sim_end = false;
 	val->sim_start_time = 0;
 	val->all_have_eaten = false;
