@@ -6,7 +6,7 @@
 /*   By: dberehov <dberehov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:54:09 by dberehov          #+#    #+#             */
-/*   Updated: 2024/04/06 17:19:41 by dberehov         ###   ########.fr       */
+/*   Updated: 2024/04/07 09:52:34 by dberehov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static bool	grab_fork(t_philo *me)
 	t_table	*val;
 
 	val = me->table;
+	if (me->id % 2 == 0)
+	{
 	pthread_mutex_lock(&(val->fork[me->l_fork]));
 	if (monitor(me, "has taken a fork"))
 		return (pthread_mutex_unlock(&(val->fork[me->l_fork])), true);
@@ -49,6 +51,17 @@ static bool	grab_fork(t_philo *me)
 	if (monitor(me, "has taken a fork"))
 		return (pthread_mutex_unlock(&(val->fork[me->r_fork])),
 			pthread_mutex_unlock(&(val->fork[me->l_fork])), true);
+	}
+	else
+	{
+	pthread_mutex_lock(&(val->fork[me->r_fork]));
+	if (monitor(me, "has taken a fork"))
+		return (pthread_mutex_unlock(&(val->fork[me->r_fork])), true);
+	pthread_mutex_lock(&(val->fork[me->l_fork]));
+	if (monitor(me, "has taken a fork"))
+		return (pthread_mutex_unlock(&(val->fork[me->l_fork])),
+			pthread_mutex_unlock(&(val->fork[me->r_fork])), true);
+	}
 	return (false);
 }
 
